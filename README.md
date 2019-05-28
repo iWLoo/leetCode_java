@@ -1,1 +1,7 @@
-leetCode java
+# leetCode
+
+##说明
+
+刷一遍leetCode，java代码实现，每道题尽量写上思路和主要备注，每天尽量10道题
+
+**开启刷题之路。**
