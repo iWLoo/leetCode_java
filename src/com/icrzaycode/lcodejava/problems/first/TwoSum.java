@@ -1,4 +1,4 @@
-package com.icrzaycode.lcodejava.first;
+package com.icrzaycode.lcodejava.problems.first;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class TwoSum {
      * 1、将数组中的数字放到hashMap中，key为值，value为数组下标
      * 2、遍历数组，找到当前值的剩余值是否在hashMap中，并且下标不能为当前下标
      *      比如，数组为[2,5,8]
-     *      目标函数为10的话，即找到2和8，避免找出两次5
+     *      目标值为10的话，即找到2和8，避免找出两次5
      * 3、找到结果返回
      *
      * 时间复杂度O(n)

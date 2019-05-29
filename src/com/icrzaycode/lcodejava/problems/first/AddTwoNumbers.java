@@ -1,4 +1,4 @@
-package com.icrzaycode.lcodejava.first;
+package com.icrzaycode.lcodejava.problems.first;
 
 /**
  * @author ybh on 2019/5/28
