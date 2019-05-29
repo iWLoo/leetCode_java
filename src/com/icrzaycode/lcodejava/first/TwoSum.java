@@ -17,6 +17,17 @@ public class TwoSum {
      * 给定 array=[1,7,11,15] , target=9
      * array[0]+array[1]=9
      * 返回[0,1]
+     *
+     * 思路：用hashMap实现
+     * 步骤：
+     * 1、将数组中的数字放到hashMap中，key为值，value为数组下标
+     * 2、遍历数组，找到当前值的剩余值是否在hashMap中，并且下标不能为当前下标
+     *      比如，数组为[2,5,8]
+     *      目标函数为10的话，即找到2和8，避免找出两次5
+     * 3、找到结果返回
+     *
+     * 时间复杂度O(n)
+     * 空间复杂度O(n)
      */
     private static int[] getTwoSumIndex(int[] nums,int target){
         int[] indexArray = new int[2];
