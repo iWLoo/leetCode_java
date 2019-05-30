@@ -147,10 +147,104 @@ public class LongestSubstring {
         return finalMaxLength;
     }
 
+    /**
+     * leetcode上2ms耗时解析：
+     * 代码思路：
+     * 1、每次比较拿到一个字符串的时候，都看下当前的字符串里有没有这个字符（方案二用的是map），这里用的for循环，k，内层循环实现
+     * 2、当不包括这个字符总长度+1，max的判断位置
+     * 3、当包括这个字符时，先找到那个位置，然后将len放到重复的字符，第一次出现重复的位置的下一个位置（len = k+1），然后比较长度
+     * 该算法的缺点，当要验证的字符串没有重复字符的时候，时间复杂度是 O(n^2)
+     *
+     * 总结：
+     *     还是说一下我理解的几个点
+     *     1、判断下一个字符有没有重复，校验重复的方式
+     *      （最优用循环，我用map。看似map的比较快，可以还要处理map的其他问题，就比较耗时了）
+     *     2、重复了如何计算长度，计算长度的方式
+     *      （计算长度我和最优想的一样，用一个index来计算）
+     *
+     * @param s
+     * @return
+     */
+    private static int lengthOfLongestSubstringBest(String s) {
+        char[] chars = s.toCharArray();
+        int max = 0;
+        if (chars.length == 0) {
+            return 0;
+        } else if (chars.length == 1) {
+            return 1;
+        }
+        //重复的坐标
+        int len = 0;
+        // 外层for循环  用来计算总长
+        int j ;
+        //内层for循环  用来计算总长
+        int k;
+        for (j=0; j <chars.length ; j++) {
+            for ( k = len;  k<j ; k++) {
+                if (chars[j] == chars[k]) {
+                    len = k+1 ;
+                    break;
+                }
+            }
+            if (max < j - len+1) {
+                max = j - len+1;
+            }
+        }
+        return max;
+    }
+
     public static void main(String[] args) {
-        String s01 = "tmmzuxt";
-        System.out.println(lengthOfLongestSubstring01(s01));
-        System.out.println(lengthOfLongestSubstring02(s01));
+        String s01 = "tmmzuxtasbnfiabfidbsaiufhasuifdbisabshabdiashduaistmmzuxtasbnfiabfidbsaiufhasuifdbisabshabdiashduais" +
+                "tmmzuxtasbnfiabfidbsaiufhasuifdbisabshabdiashduaistmmzuxtasbnfiabfidbsaiufhasuifdbisabshabdiashduais" +
+                "tmmzuxtasbnfiabfidbsaiufhasuifdbisabshabdiashduaistmmzuxtasbnfiabfidbsaiufhasuifdbisabshabdiashduais" +
+                "tmmzuxtasbnfiabfidbsaiufhasuifdbisabshabdiashduaistmmzuxtasbnfiabfidbsaiufhasuifdbisabshabdiashduais" +
+                "tmmzuxtasbnfiabfidbsaiufhasuifdbisabshabdiashduaistmmzuxtasbnfiabfidbsaiufhasuifdbisabshabdiashduais" +
+                "tmmzuxtasbnfiabfidbsaiufhasuifdbisabshabdiashduaistmmzuxtasbnfiabfidbsaiufhasuifdbisabshabdiashduais" +
+                "tmmzuxtasbnfiabfidbsaiufhasuifdbisabshabdiashduaistmmzuxtasbnfiabfidbsaiufhasuifdbisabshabdiashduais" +
+                "tmmzuxtasbnfiabfidbsaiufhasuifdbisabshabdiashduaistmmzuxtasbnfiabfidbsaiufhasuifdbisabshabdiashduais" +
+                "tmmzuxtasbnfiabfidbsaiufhasuifdbisabshabdiashduaistmmzuxtasbnfiabfidbsaiufhasuifdbisabshabdiashduais" +
+                "tmmzuxtasbnfiabfidbsaiufhasuifdbisabshabdiashduaistmmzuxtasbnfiabfidbsaiufhasuifdbisabshabdiashduais";
+        System.out.println("校验有重复字符串的长度："+s01.length());
+        /**
+         * 校验字符串的长度：1000
+         * 最佳方案耗时=0
+         * 我的方案耗时=3
+         *
+         * 执行了多次，还是人家的优秀啊。
+         * 事实证明，循环还是比map省时间，虽然map号称O(1)
+         */
+        long start01 = System.currentTimeMillis();
+        lengthOfLongestSubstringBest(s01);
+        long end01 = System.currentTimeMillis();
+        System.out.println("最佳方案耗时="+(end01-start01));
+
+        long start02 = System.currentTimeMillis();
+        lengthOfLongestSubstring02(s01);
+        long end02 = System.currentTimeMillis();
+        System.out.println("我的方案耗时="+(end02-start02));
+
+        /**
+         * 校验无重复字符串的长度：84
+         * 最佳方案耗时=0
+         * 我的方案耗时=0
+         *
+         * 为了验证它的O(n^2)的问题，我按了键盘上能按的所有按键，最后发现，实际上也没有多少
+         * 然后勉强的挽回一点局面吧，哈哈
+         */
+        String s02 = "1234567890-=!@#$%^&*()_+qwertyuiop[]asdfghjkl;'zxcvbnm,./QWERTYUIOP|ASDFGHJKLZXCVBNM";
+        System.out.println("校验无重复字符串的长度："+s02.length());
+        long start03 = System.currentTimeMillis();
+        lengthOfLongestSubstringBest(s02);
+        long end03 = System.currentTimeMillis();
+        System.out.println("最佳方案耗时="+(end03-start03));
+
+        long start04 = System.currentTimeMillis();
+        lengthOfLongestSubstring02(s02);
+        long end04 = System.currentTimeMillis();
+        System.out.println("我的方案耗时="+(end04-start04));
+
+
+//        System.out.println(lengthOfLongestSubstring02(s01));
 //        String s02 = "abcabcbb";
 //        System.out.println(lengthOfLongestSubstring01(s02));
 //        System.out.println(lengthOfLongestSubstring02(s02));
@@ -161,4 +255,5 @@ public class LongestSubstring {
 //        System.out.println(lengthOfLongestSubstring01(s04));
 //        System.out.println(lengthOfLongestSubstring02(s04));
     }
+
 }
